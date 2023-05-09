@@ -1,11 +1,12 @@
 {
   "expo": {
-    "name": "meow-explorer",
+    "name": "Meow Explorer",
+    "description": "Explore Cat Breeds",
     "slug": "meow-explorer",
-    "version": "1.0.0",
+    "version": "1.2.4",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
-    "userInterfaceStyle": "light",
+    "userInterfaceStyle": "automatic",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",

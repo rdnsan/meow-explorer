@@ -1,24 +1,31 @@
+import { useMaterial3Theme } from '@pchmn/expo-material3-theme';
 import { FlashList } from '@shopify/flash-list';
 import React, { useCallback, useEffect, useState } from 'react';
-import { Image, StyleSheet, Text, View } from 'react-native';
-import { ActivityIndicator, Appbar, List, Searchbar } from 'react-native-paper';
+import { Image, StyleSheet, useColorScheme, View } from 'react-native';
+import { ActivityIndicator, Appbar, List, Searchbar, Text } from 'react-native-paper';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { colors } from '../components/colors';
 import { apiClient } from '../services/api';
-import type { Breed } from '../types';
+import type { Breed, ThemeMode } from '../types';
 
 const styles = StyleSheet.create({
+  appBar: {
+    fontFamily: 'Lato-Bold',
+  },
   container: {
     flex: 1,
     padding: 10,
   },
   searchBar: {
-    backgroundColor: colors.lightgray,
     marginTop: -30,
+  },
+  searchBarText: {
+    fontFamily: 'Lato-Regular',
   },
   title: {
     paddingVertical: 10,
     textAlign: 'center',
+    fontFamily: 'Lato-Regular',
   },
   accordion: {
     backgroundColor: colors.primary,
@@ -27,24 +34,29 @@ const styles = StyleSheet.create({
   },
   accordionTitle: {
     color: colors.white,
+    fontFamily: 'Lato-Bold',
   },
   accordionChild: {
-    backgroundColor: colors.lightgray,
+    width: '100%',
     padding: 15,
-    marginTop: -10,
+    marginTop: -18,
     marginBottom: 10,
     borderBottomLeftRadius: 8,
     borderBottomRightRadius: 8,
+    borderWidth: 1,
+    borderTopWidth: 8,
+    borderStyle: 'solid',
+    borderColor: colors.primary,
   },
   image: {
-    width: 343,
+    width: '100%',
     height: 200,
     borderRadius: 8,
     resizeMode: 'contain',
     marginBottom: 10,
   },
   description: {
-    // width: 300,
+    fontFamily: 'Lato-Regular',
   },
   emptyList: {
     textAlign: 'center',
@@ -68,6 +80,9 @@ export default function Home() {
   const [searchText, setSearchText] = useState('');
   const [searchResults, setSearchResults] = useState<Breed[]>([]);
 
+  const colorScheme = useColorScheme();
+  const { theme } = useMaterial3Theme();
+
   const fetchBreeds = useCallback(async (_page = 0) => {
     setIsLoading(true);
     const query = new URLSearchParams({ limit: '10', page: _page.toString() }).toString();
@@ -84,7 +99,7 @@ export default function Home() {
         throw new Error('Failed fetch data!');
       }
     } catch (err) {
-      console.error(err);
+      console.error('Failed fetch:', err);
     } finally {
       setIsLoading(false);
     }
@@ -118,7 +133,6 @@ export default function Home() {
     >
       <View style={styles.accordionChild}>
         <Image
-          testID="breed-image"
           source={{ uri: `https://cdn2.thecatapi.com/images/${item.reference_image_id}.jpg` }}
           style={styles.image}
         />
@@ -131,25 +145,28 @@ export default function Home() {
     <View style={styles.loading}>
       {isLoading ? (
         <React.Fragment>
-          <ActivityIndicator size="small" color="#d1d5db" testID="loading-indicator" />
-          <Text style={styles.loadingText} testID="loading-text">
-            Fetching{currentPage > 0 && ' more'} data
-          </Text>
+          <ActivityIndicator size="small" color="#d1d5db" />
+          <Text style={styles.loadingText}>Fetching{currentPage > 0 && ' more'} data</Text>
         </React.Fragment>
       ) : null}
     </View>
   );
 
-  const renderEmpty = () => <Text style={styles.emptyList}>No Data Found</Text>;
+  const renderEmpty = () => (
+    <Text style={{ ...styles.emptyList, color: theme[colorScheme as ThemeMode].primary }}>
+      No Data Found
+    </Text>
+  );
 
   return (
     <React.Fragment>
       <Appbar.Header>
-        <Appbar.Content title="Meow Explorer" />
+        <Appbar.Content title="Meow Explorer" titleStyle={styles.appBar} />
       </Appbar.Header>
       <SafeAreaView style={styles.container}>
         <Searchbar
           style={styles.searchBar}
+          inputStyle={styles.searchBarText}
           mode="bar"
           placeholder="Search"
           onChangeText={handleSearch}
@@ -159,7 +176,7 @@ export default function Home() {
         <FlashList
           data={searchText ? (searchResults.length ? searchResults : []) : breeds}
           renderItem={renderBreed}
-          estimatedItemSize={67}
+          estimatedItemSize={70}
           keyExtractor={(item) => item.id}
           onEndReached={handleEndReached}
           onEndReachedThreshold={0.1}

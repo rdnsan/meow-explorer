@@ -94,3 +94,5 @@ export type Breed = {
   hypoallergenic: number;
   reference_image_id: string;
 };
+
+export type ThemeMode = 'dark' | 'light';

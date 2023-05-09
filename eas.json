@@ -1,6 +1,6 @@
 {
   "cli": {
-    "version": ">= 3.11.0"
+    "version": ">= 3.12.0"
   },
   "build": {
     "development": {
@@ -11,12 +11,12 @@
       "distribution": "internal",
       "android": {
         "buildType": "apk"
-      }
+      },
+      "extends": "production"
     },
     "production": {
       "env": {
-        "API_URL": "https://api.thecatapi.com/v1",
-        "API_KEY": "live_Q16ULKsPi277lOTIYvwhiY72gVZOdoYT1pX0ZAnNULMbtR4ozFhMNX57ZK7TA62D"
+        "API_URL": "https://api.thecatapi.com/v1"
       }
     }
   },

@@ -1,6 +1,6 @@
 {
   "name": "meow-explorer",
-  "version": "1.0.0",
+  "version": "1.2.4",
   "main": "node_modules/expo/AppEntry.js",
   "private": true,
   "author": "Ridwan Ikhsan <ridwan.jsx@gmail.com>",
@@ -24,7 +24,10 @@
     "react-native": "0.71.7",
     "react-native-paper": "^5.7.2",
     "react-native-safe-area-context": "4.5.0",
-    "@shopify/flash-list": "1.4.0"
+    "@shopify/flash-list": "1.4.0",
+    "expo-splash-screen": "~0.18.2",
+    "expo-font": "~11.1.1",
+    "expo-system-ui": "~2.2.1"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
