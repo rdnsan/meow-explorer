@@ -1,0 +1,26 @@
+{
+  "cli": {
+    "version": ">= 3.11.0"
+  },
+  "build": {
+    "development": {
+      "developmentClient": true,
+      "distribution": "internal"
+    },
+    "preview": {
+      "distribution": "internal",
+      "android": {
+        "buildType": "apk"
+      }
+    },
+    "production": {
+      "env": {
+        "API_URL": "https://api.thecatapi.com/v1",
+        "API_KEY": "live_Q16ULKsPi277lOTIYvwhiY72gVZOdoYT1pX0ZAnNULMbtR4ozFhMNX57ZK7TA62D"
+      }
+    }
+  },
+  "submit": {
+    "production": {}
+  }
+}
